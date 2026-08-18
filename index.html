@@ -1,19 +1,636 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>My web page</title>
-<style>
-h1{
-  color:red;
-}
-p{
-  color:blue;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>BookNest - eBook Website</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #fffaf4;
+            color: #38251c;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* NAVBAR */
+        header {
+            background: #fffaf4;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #eaded3;
+        }
+
+        nav {
+            width: 85%;
+            margin: auto;
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #5b3b2a;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #555;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #c46b38;
+        }
+
+        .btn {
+            padding: 12px 22px;
+            background: #5b3b2a;
+            color: white;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #c46b38;
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 650px;
+            padding: 70px 8%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+            background: linear-gradient(120deg, #fffaf4, #f4e2cf);
+        }
+
+        .hero-text {
+            max-width: 600px;
+        }
+
+        .hero-text small {
+            color: #c46b38;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+
+        .hero h1 {
+            font-family: Georgia, serif;
+            font-size: 65px;
+            line-height: 1.05;
+            margin: 20px 0;
+        }
+
+        .hero h1 span {
+            color: #c46b38;
+        }
+
+        .hero p {
+            color: #756b64;
+            font-size: 17px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .primary {
+            background: #c46b38;
+        }
+
+        .secondary {
+            background: transparent;
+            color: #5b3b2a;
+            border: 1px solid #5b3b2a;
+        }
+
+        /* BOOK */
+        .book {
+            width: 280px;
+            height: 400px;
+            background: linear-gradient(145deg, #75452f, #2d1810);
+            color: #f8d9ac;
+            border-radius: 5px 12px 12px 5px;
+            box-shadow: 25px 30px 35px rgba(50, 25, 10, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transform: rotate(5deg);
+        }
+
+        .book span {
+            font-size: 13px;
+            letter-spacing: 4px;
+        }
+
+        .book h2 {
+            font-family: Georgia, serif;
+            font-size: 40px;
+            line-height: 1.1;
+            margin: 25px 0;
+        }
+
+        .book small {
+            letter-spacing: 2px;
+        }
+
+        /* SECTIONS */
+        section {
+            padding: 90px 8%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title p {
+            color: #c46b38;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+
+        .section-title h2 {
+            font-family: Georgia, serif;
+            font-size: 42px;
+            margin-top: 10px;
+        }
+
+        /* BOOK CARDS */
+        .books {
+            background: white;
+        }
+
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .book-card {
+            background: white;
+            border: 1px solid #eee2d8;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(50, 30, 20, 0.07);
+            transition: 0.3s;
+        }
+
+        .book-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .cover {
+            height: 280px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .cover span {
+            font-size: 11px;
+            letter-spacing: 3px;
+        }
+
+        .cover h3 {
+            font-family: Georgia, serif;
+            font-size: 30px;
+            margin-top: 15px;
+        }
+
+        .cover1 {
+            background: linear-gradient(145deg, #a94d36, #e39a68);
+        }
+
+        .cover2 {
+            background: linear-gradient(145deg, #244d64, #51889d);
+        }
+
+        .cover3 {
+            background: linear-gradient(145deg, #587044, #a8b77c);
+        }
+
+        .cover4 {
+            background: linear-gradient(145deg, #46336d, #9a72b5);
+        }
+
+        .book-info {
+            padding: 20px;
+        }
+
+        .book-info h3 {
+            font-size: 18px;
+        }
+
+        .book-info p {
+            color: #888;
+            font-size: 14px;
+            margin: 5px 0 15px;
+        }
+
+        .book-bottom {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+        }
+
+        .book-bottom a {
+            color: #c46b38;
+            font-weight: bold;
+        }
+
+        /* CATEGORIES */
+        .categories {
+            background: #f5e5d3;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .category {
+            background: white;
+            padding: 35px 20px;
+            text-align: center;
+            border-radius: 12px;
+            transition: 0.3s;
+        }
+
+        .category:hover {
+            transform: translateY(-5px);
+        }
+
+        .icon {
+            width: 65px;
+            height: 65px;
+            margin: auto auto 15px;
+            border-radius: 50%;
+            background: #f8e5d4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .category p {
+            color: #999;
+            font-size: 14px;
+        }
+
+        /* ABOUT */
+        .about {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 70px;
+            align-items: center;
+        }
+
+        .about h2 {
+            font-family: Georgia, serif;
+            font-size: 45px;
+            line-height: 1.2;
+        }
+
+        .about p {
+            color: #706761;
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #2f1f18;
+            color: white;
+            padding: 35px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        footer .logo {
+            color: white;
+        }
+
+        footer p {
+            color: #bbb;
+            font-size: 14px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1000px) {
+            .book-grid,
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero {
+                text-align: center;
+                flex-direction: column;
+            }
+
+            .hero p {
+                max-width: 600px;
+                margin: 0 auto 30px;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .about {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .nav-links {
+                display: none;
+            }
+
+            nav {
+                width: 90%;
+            }
+
+            .hero h1 {
+                font-size: 45px;
+            }
+
+            .book-grid,
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title h2 {
+                font-size: 34px;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
+
 <body>
-<h1> Mohd Sahil</h1>
-<p>This is a pragrah</p>
+
+    <!-- NAVBAR -->
+    <header>
+        <nav>
+            <div class="logo">📚 BookNest</div>
+
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#books">Books</a></li>
+                <li><a href="#categories">Categories</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+
+            <a href="#books" class="btn">Explore Books</a>
+        </nav>
+    </header>
+
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+
+        <div class="hero-text">
+            <small>WELCOME TO BOOKNEST</small>
+
+            <h1>
+                Discover Your Next
+                <span>Great Read</span>
+            </h1>
+
+            <p>
+                Explore amazing eBooks and discover stories,
+                knowledge and inspiration at your fingertips.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="#books" class="btn primary">Browse Books</a>
+                <a href="#categories" class="btn secondary">
+                    Categories
+                </a>
+            </div>
+        </div>
+
+        <div class="book">
+            <span>THE</span>
+            <h2>
+                POWER<br>
+                OF<br>
+                READING
+            </h2>
+            <small>BOOKNEST EDITION</small>
+        </div>
+
+    </section>
+
+
+    <!-- BOOKS -->
+    <section class="books" id="books">
+
+        <div class="section-title">
+            <p>OUR COLLECTION</p>
+            <h2>Featured eBooks</h2>
+        </div>
+
+        <div class="book-grid">
+
+            <div class="book-card">
+                <div class="cover cover1">
+                    <span>THE ART OF</span>
+                    <h3>CREATIVITY</h3>
+                </div>
+
+                <div class="book-info">
+                    <h3>The Art of Creativity</h3>
+                    <p>By Sarah Wilson</p>
+
+                    <div class="book-bottom">
+                        <span>⭐ 4.8</span>
+                       <a href="sandbox:/mnt/data/Rich_Dad_Poor_Dad_10_Page_Summary_Ebook.pdf
+" target="_blank" rel="noopener">
+    Read Now →
+</a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="book-card">
+                <div class="cover cover2">
+                    <span>MASTER YOUR</span>
+                    <h3>MIND</h3>
+                </div>
+
+                <div class="book-info">
+                    <h3>Master Your Mind</h3>
+                    <p>By Daniel Carter</p>
+
+                    <div class="book-bottom">
+                        <span>⭐ 4.7</span>
+                        <a href="#">Read Now →</a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="book-card">
+                <div class="cover cover3">
+                    <span>BUILDING A</span>
+                    <h3>BETTER LIFE</h3>
+                </div>
+
+                <div class="book-info">
+                    <h3>Building a Better Life</h3>
+                    <p>By Emma Brown</p>
+
+                    <div class="book-bottom">
+                        <span>⭐ 4.9</span>
+                        <a href="#">Read Now →</a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="book-card">
+                <div class="cover cover4">
+                    <span>THE FUTURE OF</span>
+                    <h3>TECHNOLOGY</h3>
+                </div>
+
+                <div class="book-info">
+                    <h3>The Future of Technology</h3>
+                    <p>By Alex Morgan</p>
+
+                    <div class="book-bottom">
+                        <span>⭐ 4.6</span>
+                        <a href="#">Read Now →</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- CATEGORIES -->
+    <section class="categories" id="categories">
+
+        <div class="section-title">
+            <p>EXPLORE</p>
+            <h2>Popular Categories</h2>
+        </div>
+
+        <div class="category-grid">
+
+            <div class="category">
+                <div class="icon">📖</div>
+                <h3>Fiction</h3>
+                <p>1,250+ Books</p>
+            </div>
+
+            <div class="category">
+                <div class="icon">💡</div>
+                <h3>Self Development</h3>
+                <p>850+ Books</p>
+            </div>
+
+            <div class="category">
+                <div class="icon">💻</div>
+                <h3>Technology</h3>
+                <p>620+ Books</p>
+            </div>
+
+            <div class="category">
+                <div class="icon">🎨</div>
+                <h3>Art & Design</h3>
+                <p>430+ Books</p>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ABOUT -->
+    <section class="about" id="about">
+
+        <div>
+            <p style="color:#c46b38;font-weight:bold;letter-spacing:3px;">
+                ABOUT BOOKNEST
+            </p>
+
+            <h2>
+                Books That Inspire.<br>
+                Ideas That Last.
+            </h2>
+        </div>
+
+        <p>
+            BookNest is a modern digital library designed for readers.
+            Find your favorite books, discover new authors and enjoy
+            reading anytime, anywhere.
+        </p>
+
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <div class="logo">📚 BookNest</div>
+
+        <p>© 2026 BookNest. All Rights Reserved.</p>
+
+        <div>
+            <a href="#" style="color:#ddd;margin:10px;">Facebook</a>
+            <a href="#" style="color:#ddd;margin:10px;">Instagram</a>
+            <a href="#" style="color:#ddd;margin:10px;">Twitter</a>
+        </div>
+
+    </footer>
 
 </body>
 </html>
